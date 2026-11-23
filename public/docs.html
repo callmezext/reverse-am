@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>am / api docs — REST API Documentation</title>
+<style>
+:root {
+  --bg: #0a0a0b;
+  --panel: #111113;
+  --panel-alt: #161619;
+  --line: #232326;
+  --txt: #e8e8ea;
+  --dim: #8a8a91;
+  --acc: #5ec269;
+  --acc-dim: #2c4a30;
+  --blue: #5ba4e6;
+  --yellow: #f0a742;
+  --red: #e05252;
+}
+* { margin: 0; padding: 0; box-sizing: border-box }
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px 80px;
+}
+.wrap { width: 100%; max-width: 680px }
+
+header {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+header h1 { font-size: 16px; font-weight: 600; letter-spacing: .02em }
+header h1 span { color: var(--acc) }
+header p { color: var(--dim); font-size: 12px; margin-top: 4px }
+.nav-link {
+  color: var(--acc);
+  text-decoration: none;
+  font-size: 12px;
+  border: 1px solid var(--line);
+  padding: 5px 10px;
+  background: var(--panel);
+  transition: .15s;
+}
+.nav-link:hover { border-color: var(--acc) }
+
+.base-badge {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.base-badge span { color: var(--dim); font-size: 11px }
+.base-badge code { color: var(--acc); font-weight: 600; font-size: 12.5px }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.endpoint-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.method {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  letter-spacing: .05em;
+  border-radius: 2px;
+}
+.method.get { background: #162c1d; color: var(--acc); border: 1px solid var(--acc-dim) }
+.method.post { background: #142436; color: var(--blue); border: 1px solid #204060 }
+.endpoint-url { font-size: 13.5px; font-weight: 600; word-break: break-all }
+.desc { color: var(--dim); font-size: 12px; margin-bottom: 16px }
+
+.sec-title {
+  color: var(--dim);
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin: 14px 0 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: 7px 10px;
+  text-align: left;
+}
+th { background: var(--panel-alt); color: var(--dim); font-weight: 600 }
+td.req { color: var(--red); font-size: 11px }
+td.opt { color: var(--dim); font-size: 11px }
+
+pre {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 12px;
+  overflow-x: auto;
+  font-size: 11.5px;
+  color: #d1d1d6;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--dim);
+  padding: 3px 8px;
+  font-size: 10px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.copy-btn:hover { color: var(--txt); border-color: var(--dim) }
+
+.tab-group {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+.tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--dim);
+  font-family: inherit;
+  font-size: 11px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.tab-btn.active {
+  border-color: var(--line);
+  background: var(--panel-alt);
+  color: var(--acc);
+}
+
+footer {
+  margin-top: 36px;
+  color: #4a4a52;
+  font-size: 11px;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <h1>am <span>/</span> api docs <span style="color:var(--dim);font-weight:400">v1.0</span></h1>
+    <p>Dokumentasi REST API Alight Motion Premium Activator</p>
+  </div>
+  <a href="/" class="nav-link">&larr; Web Activator</a>
+</header>
+
+<div class="base-badge">
+  <span>BASE URL</span>
+  <code id="base-url">https://ampro.enchant.id/api</code>
+</div>
+
+<!-- ENDPOINT 1: STATUS -->
+<div class="card">
+  <div class="endpoint-header">
+    <span class="method get">GET</span>
+    <span class="endpoint-url">/status</span>
+  </div>
+  <p class="desc">Cek ketersediaan dan status server activator.</p>
+
+  <div class="sec-title">Response (200 OK)</div>
+  <pre><code>{
+  "status": "online",
+  "timestamp": "2026-09-11T00:24:18.676Z"
+}</code></pre>
+
+  <div class="sec-title">Contoh cURL</div>
+  <pre style="position:relative"><code class="curl-code">curl -s https://ampro.enchant.id/api/status</code><button class="copy-btn" onclick="copySnippet(this)">copy</button></pre>
+</div>
+
+<!-- ENDPOINT 2: SEND LINK -->
+<div class="card">
+  <div class="endpoint-header">
+    <span class="method post">POST</span>
+    <span class="endpoint-url">/send-link</span>
+  </div>
+  <p class="desc">Meminta Firebase Auth mengirimkan magic link login ke email target.</p>
+
+  <div class="sec-title">Headers</div>
+  <pre><code>Content-Type: application/json</code></pre>
+
+  <div class="sec-title">Request Body (JSON)</div>
+  <table>
+    <thead>
+      <tr><th>Field</th><th>Tipe</th><th>Wajib?</th><th>Keterangan</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>email</code></td>
+        <td>string</td>
+        <td class="req">wajib</td>
+        <td>Email valid yang akan didaftarkan/diaktifkan</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec-title">Request Body Contoh</div>
+  <pre><code>{
+  "email": "user@gmail.com"
+}</code></pre>
+
+  <div class="sec-title">Response (200 OK)</div>
+  <pre><code>{
+  "success": true,
+  "email": "user@gmail.com",
+  "message": "link dikirim ke user@gmail.com. cek inbox / spam."
+}</code></pre>
+
+  <div class="sec-title">Contoh cURL</div>
+  <pre style="position:relative"><code class="curl-code">curl -X POST https://ampro.enchant.id/api/send-link \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@gmail.com"}'</code><button class="copy-btn" onclick="copySnippet(this)">copy</button></pre>
+</div>
+
+<!-- ENDPOINT 3: VERIFY LINK -->
+<div class="card">
+  <div class="endpoint-header">
+    <span class="method post">POST</span>
+    <span class="endpoint-url">/verify-link</span>
+  </div>
+  <p class="desc">Memvalidasi link email, mengatur custom nickname, dan mengaktifkan lisensi Annual VIP Pro.</p>
+
+  <div class="sec-title">Headers</div>
+  <pre><code>Content-Type: application/json</code></pre>
+
+  <div class="sec-title">Request Body (JSON)</div>
+  <table>
+    <thead>
+      <tr><th>Field</th><th>Tipe</th><th>Wajib?</th><th>Keterangan</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>email</code></td>
+        <td>string</td>
+        <td class="req">wajib</td>
+        <td>Email tujuan yang menerima magic link</td>
+      </tr>
+      <tr>
+        <td><code>magicLink</code></td>
+        <td>string</td>
+        <td class="req">wajib</td>
+        <td>URL lengkap dari email atau kode <code>oobCode</code></td>
+      </tr>
+      <tr>
+        <td><code>nickname</code></td>
+        <td>string</td>
+        <td class="opt">opsional</td>
+        <td>Custom nama akun. Jika kosong, otomatis diambil dari email</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec-title">Request Body Contoh</div>
+  <pre><code>{
+  "email": "user@gmail.com",
+  "magicLink": "https://alightcreative.com?ui_sid=...&oobCode=ab12cd...",
+  "nickname": "Zenno Pro"
+}</code></pre>
+
+  <div class="sec-title">Response (200 OK)</div>
+  <pre><code>{
+  "success": true,
+  "message": "verifikasi berhasil, premium aktif.",
+  "data": {
+    "displayName": "Zenno Pro",
+    "email": "user@gmail.com",
+    "uid": "1B2c3D4e5F6g...",
+    "status": "ACTIVE",
+    "membershipStatus": "PREMIUM_ACTIVE",
+    "planName": "Alight Motion Pro / Member",
+    "subscriptionType": "Yearly VIP License",
+    "orderId": "GPA.ENCH-3974-4453-52315",
+    "validUntil": "11 September 2027",
+    "validUntilTimestamp": 1820622345678,
+    "idToken": "eyJhbGciOiJSUzI1NiIs...",
+    "refreshToken": "AMf-vBx..."
+  }
+}</code></pre>
+
+  <div class="sec-title">Contoh cURL</div>
+  <pre style="position:relative"><code class="curl-code">curl -X POST https://ampro.enchant.id/api/verify-link \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@gmail.com",
+    "magicLink": "LINK_DARI_EMAIL",
+    "nickname": "Zenno Pro"
+  }'</code><button class="copy-btn" onclick="copySnippet(this)">copy</button></pre>
+</div>
+
+<!-- ENDPOINT 4: STATS -->
+<div class="card">
+  <div class="endpoint-header">
+    <span class="method get">GET</span>
+    <span class="endpoint-url">/stats</span>
+  </div>
+  <p class="desc">Mengambil statistik total aktivasi yang sudah berhasil diproses server.</p>
+
+  <div class="sec-title">Response (200 OK)</div>
+  <pre><code>{
+  "success": true,
+  "total": 1559,
+  "today": 0,
+  "timestamp": "2026-09-11T00:05:02.560Z"
+}</code></pre>
+
+  <div class="sec-title">Contoh cURL</div>
+  <pre style="position:relative"><code class="curl-code">curl -s https://ampro.enchant.id/api/stats</code><button class="copy-btn" onclick="copySnippet(this)">copy</button></pre>
+</div>
+
+<!-- CONTOH INTEGRASI KODE -->
+<div class="card">
+  <h2 style="font-size:14px;margin-bottom:8px">Contoh Integrasi di Server Luar</h2>
+  <p class="desc">Script siap pakai untuk dipanggil dari bot WA / Telegram / backend kamu.</p>
+
+  <div class="tab-group">
+    <button class="tab-btn active" onclick="showTab('js', this)">Node.js (Axios)</button>
+    <button class="tab-btn" onclick="showTab('py', this)">Python</button>
+    <button class="tab-btn" onclick="showTab('php', this)">PHP</button>
+  </div>
+
+  <div id="tab-js">
+<pre style="position:relative"><code class="curl-code">const axios = require('axios')
+const BASE = 'https://ampro.enchant.id/api'
+
+async function kirim(email) {
+  const r = await axios.post(`${BASE}/send-link`, { email })
+  return r.data
+}
+
+async function aktivasi(email, link, nickname) {
+  const r = await axios.post(`${BASE}/verify-link`, {
+    email,
+    magicLink: link,
+    nickname: nickname || undefined
+  })
+  return r.data
+}</code><button class="copy-btn" onclick="copySnippet(this)">copy</button></pre>
+  </div>
+
+  <div id="tab-py" style="display:none">
+<pre style="position:relative"><code class="curl-code">import requests
+
+BASE = "https://ampro.enchant.id/api"
+
+# 1. Kirim link
+def send_link(email):
+    return requests.post(f"{BASE}/send-link", json={"email": email}).json()
+
+# 2. Verifikasi + Premium
+def verify(email, link, nickname=None):
+    payload = {"email": email, "magicLink": link}
+    if nickname:
+        payload["nickname"] = nickname
+    return requests.post(f"{BASE}/verify-link", json=payload).json()</code><button class="copy-btn" onclick="copySnippet(this)">copy</button></pre>
+  </div>
+
+  <div id="tab-php" style="display:none">
+<pre style="position:relative"><code class="curl-code">&lt;?php
+$base = "https://ampro.enchant.id/api";
+
+function verifyLink($email, $link, $nickname = null) {
+    global $base;
+    $ch = curl_init("$base/verify-link");
+    $data = json_encode([
+        "email" => $email,
+        "magicLink" => $link,
+        "nickname" => $nickname
+    ]);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $res = curl_exec($ch);
+    curl_close($ch);
+    return json_decode($res, true);
+}</code><button class="copy-btn" onclick="copySnippet(this)">copy</button></pre>
+  </div>
+</div>
+
+<footer>
+  <p>am-reverse &middot; CORS enabled &middot; public REST API</p>
+</footer>
+
+</div>
+
+<script>
+function copySnippet(btn) {
+  const code = btn.parentElement.querySelector('code').textContent
+  navigator.clipboard.writeText(code)
+  btn.textContent = 'copied!'
+  setTimeout(() => btn.textContent = 'copy', 1500)
+}
+
+function showTab(lang, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  document.getElementById('tab-js').style.display = lang === 'js' ? 'block' : 'none'
+  document.getElementById('tab-py').style.display = lang === 'py' ? 'block' : 'none'
+  document.getElementById('tab-php').style.display = lang === 'php' ? 'block' : 'none'
+}
+</script>
+</body>
+</html>

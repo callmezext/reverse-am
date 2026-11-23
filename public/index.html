@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YUME // AM Pro Activate</title>
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0b11'/%3E%3Crect x='7' y='5' width='4' height='5' rx='1' fill='%23f4f4f1'/%3E%3Crect x='21' y='5' width='4' height='5' rx='1' fill='%23f4f4f1'/%3E%3Crect x='6' y='9' width='20' height='17' rx='4' fill='%23f4f4f1'/%3E%3Crect x='10' y='15' width='4' height='5' rx='1' fill='%230a0b11'/%3E%3Crect x='18' y='15' width='4' height='5' rx='1' fill='%230a0b11'/%3E%3C/svg%3E"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Mona+Sans:ital,wdth,wght@0,87.5..112.5,300..800;1,87.5..112.5,300..800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --yume-void: #0a0b11;
+      --yume-slab: #14151b;
+      --yume-slab-2: #1b1c22;
+      --yume-seam: #26272d;
+      --yume-seam-2: #37383e;
+      --yume-mute: #969691;
+      --yume-ink-2: #c8c8c3;
+      --yume-ink: #f4f4f1;
+      --yume-black: #06070c;
+      --yume-xp: #80ff20;
+      --yume-xp-hover: #9bff52;
+      --stage-accent: #8be8cb;
+      --stage-accent-soft: #16342c;
+      --red: #f87171;
+      --ease-out: cubic-bezier(.2, .7, .2, 1);
+      --font-sans: "Mona Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--yume-void);
+      color: var(--yume-ink);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 28px 16px 48px;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.032;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .glow-top {
+      position: fixed;
+      top: -140px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 260px;
+      background: rgba(128, 255, 32, 0.05);
+      filter: blur(130px);
+      border-radius: 9999px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    ::selection { background: var(--yume-xp); color: var(--yume-black); }
+
+    .wrap { width: 100%; max-width: 560px; }
+
+    /* Top Nav */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--yume-seam);
+      gap: 12px;
+    }
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--yume-ink);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--yume-slab);
+      border: 1px solid var(--yume-seam);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .15s var(--ease-out);
+    }
+    .brand-link:hover .brand-icon { border-color: var(--yume-seam-2); }
+    .brand-link span.sub { color: var(--yume-mute); }
+
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .docs-link {
+      color: var(--yume-ink-2);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--yume-seam);
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: var(--yume-slab);
+      transition: border-color .15s var(--ease-out), color .15s var(--ease-out);
+    }
+    .docs-link:hover { border-color: var(--yume-xp); color: var(--yume-xp); }
+
+    header { margin-bottom: 22px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--stage-accent);
+      background: rgba(22, 52, 44, 0.7);
+      border: 1px solid rgba(139, 232, 203, 0.2);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .dot-live {
+      width: 7px;
+      height: 7px;
+      border-radius: 9999px;
+      background: var(--yume-xp);
+      box-shadow: 0 0 8px var(--yume-xp);
+    }
+    header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--yume-ink);
+    }
+    header h1 span { color: var(--yume-xp); }
+    header p { color: var(--yume-mute); font-size: 13px; margin-top: 4px; }
+
+    /* Steps */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 18px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: var(--yume-slab);
+      border: 1px solid var(--yume-seam);
+      padding: 6px;
+      border-radius: 12px;
+    }
+    .steps div {
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: var(--yume-mute);
+      text-align: center;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      transition: all .15s var(--ease-out);
+    }
+    .steps div.on { background: var(--yume-xp); color: var(--yume-black); }
+    .steps div.done { background: var(--stage-accent-soft); color: var(--stage-accent); border: 1px solid rgba(139, 232, 203, 0.25); }
+
+    /* Panels */
+    .panel {
+      background: var(--yume-slab);
+      border: 1px solid var(--yume-seam);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+    .panel h2 { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: var(--yume-ink); text-transform: capitalize; }
+    .panel .hint { color: var(--yume-mute); font-size: 12.5px; margin-bottom: 16px; }
+
+    .stats-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      color: var(--yume-mute);
+      font-size: 10.5px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .stat-val {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    label {
+      display: block;
+      font-family: var(--font-mono);
+      color: var(--yume-mute);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      background: #0e0f15;
+      border: 1px solid var(--yume-seam);
+      border-radius: 10px;
+      color: var(--yume-ink);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 11px 13px;
+      outline: none;
+      transition: border-color .15s var(--ease-out);
+    }
+    input::placeholder { color: rgba(150, 150, 145, 0.55); }
+    input:focus { border-color: var(--yume-xp); }
+
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    button {
+      background: var(--yume-xp);
+      color: var(--yume-black);
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 11px 20px;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: background-color .15s var(--ease-out), transform .15s var(--ease-out);
+    }
+    button:hover { background: var(--yume-xp-hover); }
+    button:active { transform: scale(0.985); }
+    button.sec {
+      background: var(--yume-slab-2);
+      color: var(--yume-ink-2);
+      border: 1px solid var(--yume-seam-2);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    button.sec:hover { background: var(--yume-seam); color: var(--yume-ink); }
+    button.tiny { padding: 8px 14px; font-size: 12px; margin-top: 10px; }
+    button:disabled { opacity: .45; cursor: wait; }
+
+    .msg {
+      padding: 10px 13px;
+      border-radius: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      margin-top: 14px;
+      display: none;
+    }
+    .msg.err { display: block; background: rgba(53, 24, 34, 0.75); border: 1px solid rgba(248, 113, 113, 0.35); color: #fecaca; }
+    .msg.ok { display: block; background: rgba(18, 49, 32, 0.75); border: 1px solid rgba(128, 255, 32, 0.35); color: var(--yume-xp); }
+
+    .kv {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--yume-seam);
+      font-size: 12.5px;
+    }
+    .kv:last-child { border-bottom: none; }
+    .kv b { color: var(--yume-mute); font-family: var(--font-mono); font-weight: 500; text-transform: uppercase; font-size: 11px; }
+    .kv span { color: var(--yume-ink); font-family: var(--font-mono); text-align: right; word-break: break-all; max-width: 65%; }
+    .tok {
+      background: #0e0f15;
+      border: 1px solid var(--yume-seam);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      word-break: break-all;
+      color: var(--yume-ink-2);
+      max-height: 92px;
+      overflow-y: auto;
+    }
+
+    .hide { display: none; }
+
+    /* Tutorial Accordion */
+    .guide-box {
+      background: var(--yume-slab);
+      border: 1px solid var(--yume-seam);
+      border-radius: 16px;
+      margin-top: 18px;
+      overflow: hidden;
+      font-size: 12.5px;
+    }
+    .guide-header {
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid transparent;
+      transition: background-color .15s var(--ease-out);
+    }
+    .guide-header:hover { background: var(--yume-slab-2); }
+    .guide-header.open { border-bottom-color: var(--yume-seam); }
+    .guide-header b { font-size: 13px; color: var(--yume-ink); display: flex; align-items: center; gap: 8px; }
+    .guide-header span.tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--stage-accent);
+      background: rgba(22, 52, 44, 0.7);
+      border: 1px solid rgba(139, 232, 203, 0.25);
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+    .guide-arrow { color: var(--yume-mute); transition: transform .2s ease; font-size: 11px; }
+    .guide-header.open .guide-arrow { transform: rotate(180deg); }
+    .guide-content { padding: 18px; color: var(--yume-ink-2); line-height: 1.65; display: none; }
+    .guide-content.open { display: block; }
+    .guide-step { margin-bottom: 14px; }
+    .guide-step:last-child { margin-bottom: 0; }
+    .guide-step-title { color: var(--yume-ink); font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .guide-step-title span.num { font-family: var(--font-mono); color: var(--yume-xp); font-size: 11px; }
+    .guide-tip {
+      background: rgba(22, 52, 44, 0.45);
+      border: 1px solid rgba(139, 232, 203, 0.2);
+      border-left: 3px solid var(--stage-accent);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--yume-ink-2);
+    }
+    .guide-tip b { color: var(--stage-accent); }
+
+    footer {
+      margin-top: 24px;
+      padding-top: 14px;
+      border-top: 1px solid var(--yume-seam);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--yume-mute);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    footer a { color: var(--yume-mute); text-decoration: none; transition: color .15s; }
+    footer a:hover { color: var(--yume-xp); }
+  </style>
+</head>
+<body>
+<div class="glow-top"></div>
+<div class="wrap">
+
+  <div class="topbar">
+    <a href="https://yume.tech" class="brand-link">
+      <span class="brand-icon">
+        <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+          <rect x="7" y="5" width="4" height="5" rx="1" fill="#f4f4f1"/>
+          <rect x="21" y="5" width="4" height="5" rx="1" fill="#f4f4f1"/>
+          <rect x="6" y="9" width="20" height="17" rx="4" fill="#f4f4f1"/>
+          <rect x="10" y="15" width="4" height="5" rx="1" fill="#0a0b11"/>
+          <rect x="18" y="15" width="4" height="5" rx="1" fill="#0a0b11"/>
+        </svg>
+      </span>
+      <span>YUME <span class="sub">// AM PRO</span></span>
+    </a>
+    <div class="nav-actions">
+      <a href="https://mail.yume.tech" class="docs-link">Mail Hub &rarr;</a>
+      <a href="/docs" class="docs-link">API Docs</a>
+    </div>
+  </div>
+
+  <header>
+    <div class="eyebrow"><span class="dot-live"></span><span>ALIGHT MOTION MAGIC LINK</span></div>
+    <h1>am <span>/</span> activate <span style="color:var(--yume-mute);font-weight:400;font-size:16px">by neo</span></h1>
+    <p>Aktivasi Alight Motion Pro instan via magic link tanpa password.</p>
+  </header>
+
+  <div class="steps">
+    <div id="n1" class="on">01 email</div>
+    <div id="n2">02 link</div>
+    <div id="n3">03 done</div>
+  </div>
+
+  <div class="panel stats-grid">
+    <div>
+      <div class="stat-label">TOTAL AKTIVASI</div>
+      <div class="stat-val" style="color:var(--yume-xp)" id="st-total">-</div>
+    </div>
+    <div style="text-align:right">
+      <div class="stat-label">HARI INI</div>
+      <div class="stat-val" style="color:var(--stage-accent)" id="st-today">-</div>
+    </div>
+  </div>
+
+  <div class="panel" id="p1">
+    <h2>masukkan email</h2>
+    <p class="hint">Link login dikirim ke email (bisa pakai email dari <a href="https://mail.yume.tech" target="_blank" style="color:var(--stage-accent);text-decoration:none">mail.yume.tech</a>).</p>
+    <label>email</label>
+    <input id="em" type="email" placeholder="nama@yume.tech atau nama@gmail.com">
+    <label style="margin-top:12px">nickname <span style="color:var(--yume-mute);font-weight:400;text-transform:none">(opsional, default: dari email)</span></label>
+    <input id="nick" type="text" placeholder="contoh: Guntur, Zenno, dsb.">
+    <button id="b1">kirim link &rarr;</button>
+    <div id="m1" class="msg"></div>
+  </div>
+
+  <div class="panel hide" id="p2">
+    <h2>tempel link verifikasi</h2>
+    <p class="hint">Link login sudah terkirim ke <span id="w-em" style="color:var(--yume-xp);font-family:var(--font-mono)">-</span>.</p>
+    <div class="guide-tip" style="margin-bottom:14px;margin-top:0">
+      <b>💡 Tips Email:</b> Cek folder <b>Spam</b> atau <b>Promosi</b> jika tidak ada di kotak masuk utama. Tekan lama tombol di email &rarr; pilih <b>"Salin alamat tautan"</b>.
+    </div>
+    <label>link verifikasi</label>
+    <input id="lk" type="text" placeholder="https://alightcreative.com... atau oobCode">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button id="b2" class="sec">&larr; kembali</button>
+      <button id="b3">verifikasi &rarr;</button>
+    </div>
+    <div id="m2" class="msg"></div>
+  </div>
+
+  <div class="panel hide" id="p3">
+    <h2 style="color:var(--yume-xp)">premium aktif</h2>
+    <p class="hint">Detail akun di bawah, token bisa disalin.</p>
+    <div class="kv"><b>nickname</b><span id="r-nick">-</span></div>
+    <div class="kv"><b>email</b><span id="r-em">-</span></div>
+    <div class="kv"><b>uid</b><span id="r-uid">-</span></div>
+    <div class="kv"><b>order</b><span id="r-ord">-</span></div>
+    <div style="margin-top:14px">
+      <label>id token</label>
+      <div class="tok" id="r-tok">-</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="tiny sec" id="b4">copy token</button>
+        <button class="tiny sec" id="b5">aktivasi lain</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TUTORIAL / PANDUAN CARA PAKAI -->
+  <div class="guide-box">
+    <div class="guide-header" id="guide-toggle">
+      <b>📖 Panduan &amp; Tips Aktivasi <span class="tag">WAJIB BACA</span></b>
+      <span class="guide-arrow">▼</span>
+    </div>
+    <div class="guide-content" id="guide-content">
+      <div class="guide-step">
+        <div class="guide-step-title"><span class="num">01.</span> Masukkan Email &amp; Nickname</div>
+        <p>Ketik email aktif kamu (atau buat email instan di <b>mail.yume.tech</b>). Nickname opsional.</p>
+      </div>
+
+      <div class="guide-step">
+        <div class="guide-step-title"><span class="num">02.</span> Buka Email &amp; Cari Link Masuk</div>
+        <p>Buka inbox email kamu dan cari email dari <b>Alight Motion</b> atau <b>Alight Creative</b>.</p>
+        <div class="guide-tip">
+          <b>⚠️ Khusus Pengguna Gmail &amp; Yahoo:</b><br>
+          Email verifikasi sering masuk ke folder <b>Spam</b>, <b>Promosi (Promotions)</b>, atau <b>Sosial</b>. Jika di Kotak Masuk utama tidak ada, segera buka folder <b>Spam</b>!
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="guide-step-title"><span class="num">03.</span> Salin Link Masuk (Jangan Langsung Klik!)</div>
+        <p>Di dalam email ada tombol atau link berwarna biru (misal <i>"Sign in to Alight Creative"</i>). <b>Tekan lama (hold)</b> pada tombol/link tersebut &rarr; pilih <b>Salin alamat tautan (Copy link address)</b>.</p>
+      </div>
+
+      <div class="guide-step">
+        <div class="guide-step-title"><span class="num">04.</span> Paste di Step 2 Web Ini</div>
+        <p>Kembali ke web ini, tempel (paste) link yang tadi kamu salin ke kolom yang tersedia, lalu klik tombol <b>Verifikasi &rarr;</b>.</p>
+      </div>
+
+      <div class="guide-step">
+        <div class="guide-step-title"><span class="num">05.</span> Buka Aplikasi Alight Motion</div>
+        <p>Setelah status <b>Premium Aktif</b>, buka aplikasi Alight Motion di HP kamu, lalu <b>Login menggunakan email yang sama</b>. Akun kamu sudah otomatis berstatus <b>Member / Pro</b>!</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>unofficial &middot; reverse engineered</span>
+    <a href="https://yume.tech">&larr; Lobby yume.tech</a>
+  </footer>
+
+</div>
+
+<script>
+const $ = i => document.getElementById(i)
+
+fetch('/api/stats').then(r => r.json()).then(j => {
+  $('st-total').textContent = Number(j.total || 0).toLocaleString('id-ID')
+  $('st-today').textContent = Number(j.today || 0).toLocaleString('id-ID')
+}).catch(() => {})
+
+const step = n => {
+  for (let i = 1; i <= 3; i++) {
+    $('p' + i).classList.toggle('hide', i !== n)
+    $('n' + i).className = i < n ? 'done' : (i === n ? 'on' : '')
+  }
+}
+const say = (id, txt, ok) => {
+  const m = $(id)
+  m.textContent = txt
+  m.className = 'msg ' + (ok ? 'ok' : 'err')
+}
+const busy = (b, on, t) => { b.disabled = on; if (t) b.textContent = t }
+
+$('b1').onclick = async () => {
+  const em = $('em').value.trim()
+  if (!em.includes('@')) return say('m1', 'email gak valid', 0)
+  const b = $('b1'); busy(b, true, 'mengirim...')
+  try {
+    const r = await fetch('/api/send-link', { method: 'POST', headers: {'content-type':'application/json'}, body: JSON.stringify({ email: em }) })
+    const j = await r.json()
+    if (j.success) { say('m1', 'link terkirim, cek email', 1); $('w-em').textContent = em; setTimeout(() => step(2), 700) }
+    else say('m1', j.message || 'gagal', 0)
+  } catch { say('m1', 'server gak nyambung', 0) }
+  busy(b, false); b.textContent = 'kirim link \u2192'
+}
+
+$('b2').onclick = () => step(1)
+
+$('b3').onclick = async () => {
+  const raw = $('lk').value.trim()
+  if (!raw) return say('m2', 'link kosong', 0)
+  const b = $('b3'); busy(b, true, 'verifikasi...')
+  try {
+    const r = await fetch('/api/verify-link', {
+      method: 'POST',
+      headers: {'content-type':'application/json'},
+      body: JSON.stringify({
+        email: $('w-em').textContent,
+        magicLink: raw,
+        nickname: ($('nick').value || '').trim()
+      })
+    })
+    const j = await r.json()
+    if (j.success) {
+      const d = j.data
+      $('r-nick').textContent = d.displayName || '-'
+      $('r-em').textContent = d.email
+      $('r-uid').textContent = d.uid
+      $('r-ord').textContent = d.orderId || '-'
+      $('r-tok').textContent = d.idToken
+      window.__tok = d.idToken
+      step(3)
+    } else say('m2', j.message || 'gagal', 0)
+  } catch { say('m2', 'server gak nyambung', 0) }
+  busy(b, false); b.textContent = 'verifikasi \u2192'
+}
+
+$('b4').onclick = () => { navigator.clipboard.writeText(window.__tok || ''); $('b4').textContent = 'copied' }
+$('b5').onclick = () => { $('lk').value = ''; $('nick').value = ''; step(1) }
+
+$('guide-toggle').onclick = () => {
+  $('guide-toggle').classList.toggle('open')
+  $('guide-content').classList.toggle('open')
+}
+</script>
+</body>
+</html>
